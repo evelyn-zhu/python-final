@@ -51,3 +51,32 @@ Harnessing the advanced capabilities of modern Natural Language Processing (NLP)
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/LinkedIn_Job_Analytics_Networking.git
+2. Enter the directory:
+   ```bash
+   cd LinkedIn_Job_Analytics_Networking
+3. Set up the environment:
+   ```bash
+   pip install -r requirements.txt
+4. Ensure the right version of ChromeDriver is available and located in the directory.
+
+## Usage Guidelines
+
+1. Update LinkedIn credentials and necessary details in the scripts.
+2. Launch the main interface:
+   ```bash
+   python main.py
+
+## Important Notes
+
+- This sophisticated tool might operate against LinkedIn's terms. Exercise caution and use responsibly.
+- Ensure compatibility between ChromeDriver and your Chrome browser version.
+- We recommend initial tests in a controlled setting before extensive deployment.
+
+## Important Notes
+MIT
+
+## Important Notes
+This project is intended for educational and research purposes. The developers disclaim responsibility for any misuse or potential violations of terms of service.
+
+## Contributors:
+Chris Wang, David He, Evelyn Zhu, Kathy Wang, Rui Xi
