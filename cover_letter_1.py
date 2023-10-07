@@ -3,10 +3,8 @@ from similarity import extract_skills, compute_similarity_and_skills, HARD_SKILL
 from webscraper import get_job_data
 
 
-def generate_cover_letter(row_number, resume_text):
+def generate_cover_letter(df, row_number, resume_text):
     # Load the data
-    df = get_job_data()
-
     if row_number not in df.index:
         print(f"Row number {row_number} not found!")
         return
@@ -40,11 +38,11 @@ def generate_cover_letter(row_number, resume_text):
     doc.add_paragraph(f"\nSincerely,\n[Your Name]")
 
     # Save the tailored cover letter
-    new_filename = f"Cover_Letter_for_{position_name}.docx"
+    new_filename = f"Cover_Letter_for_{company_info}.docx"
     new_filename = sanitize_filename(new_filename)
     doc.save(new_filename)
 
-    print(f"Cover letter tailored for {position_name} saved as {new_filename}!")
+    print(f"Cover letter tailored for {company_info} saved as '{new_filename}'!")
 
 def display_jobs_with_numbers(job_data_df):
     print("\nList of Jobs:")
