@@ -42,6 +42,27 @@ def call_openai_api(instruction, prompt):
     )
     return response
 
+def linkedin_login(webdriver, username, password):
+    # Initialize url and class name
+    class_login = "form__input--floating"
+    ID_input_username = "username"
+    ID_input_password = "password"
+    class_login_button = "login__form_action_container"
+    url_LinkedIn = "https://www.linkedin.com/login"
+
+    # Log In
+    webdriver.get(url_LinkedIn)
+    login_elements = webdriver.find_elements(By.CLASS_NAME,class_login)
+    username_key = login_elements[0].find_element(By.ID, ID_input_username)
+    password_key = login_elements[1].find_element(By.ID, ID_input_password)
+    username_key.send_keys(username)
+    password_key.send_keys(password)
+    login_button = webdriver.find_element(By.CLASS_NAME,class_login_button)
+    login_button.click()
+
+    # for verification purpose, fuck linkedin
+    wait(15)
+
 def networking_message(search_string, number_of_connection,
                        username, password, resume):
 
@@ -54,12 +75,7 @@ def networking_message(search_string, number_of_connection,
     '''
 
     # Initialize url and class name
-    url_LinkedIn = "https://www.linkedin.com/login"
-    class_login = "form__input--floating"
-    ID_input_username = "username"
-    ID_input_password = "password"
     class_next_page_button = "artdeco-pagination__button"
-    class_login_button = "login__form_action_container"
     class_search_box = "search-global-typeahead__input"
     class_filter_box = "search-reusables__primary-filter"
     class_filter_botton = "artdeco-pill"
@@ -81,20 +97,7 @@ def networking_message(search_string, number_of_connection,
     wd = webdriver.Chrome(options=options)
     
     # Log In
-    wd.get(url_LinkedIn)
-    login_elements = wd.find_elements(By.CLASS_NAME,class_login)
-    username_key = login_elements[0].find_element(By.ID, ID_input_username)
-    password_key = login_elements[1].find_element(By.ID, ID_input_password)
-    username_key.send_keys(username)
-    password_key.send_keys(password)
-    login_button = wd.find_element(By.CLASS_NAME,class_login_button)
-    login_button.click()
-
-    # for vertification purpose
-    # sometimes you have to do a human-verification test
-    # fuck linkedin
-    wait(20)
-
+    linkedin_login(wd, username, password)
 
     # Search
     search_box = wd.find_element(By.CLASS_NAME,class_search_box)
@@ -173,7 +176,8 @@ def networking_message(search_string, number_of_connection,
                 chatbox = chatbox_present[0].find_elements(By.CLASS_NAME, class_message_box)[0]
                 chatbox.click()
                 chatbox.send_keys(Keys.CONTROL + "a")  # This will select all the content
-                chatbox.send_keys(Keys.DELETE)         # This will delete the selected content
+                chatbox.send_keys(Keys.DELETE)
+                print("")
                 print("messaging: " + people_name)
                 break
             except Exception as e:
@@ -229,61 +233,4 @@ def networking_message(search_string, number_of_connection,
 
 ################################# Just for testing purpose #######################################################
 
-if __name__ == "__main__":
-
-    user_resume = f'''
-    David He
-    runyuh@andrew.cmu.edu
-    CARNEGIE MELLON UNIVERSITY
-    Master of Information Systems Management, Business Intelligence and Data Analytics
-    Relevant Coursework: Intro to Deep Learning, Unstructured Data Analysis, Relational Database Management, Agile Method
-    UNIVERSITY OF CALIFORNIA, LOS ANGELES
-    Bachelor of Art in Psychology, Business Economics; Specialization: Computing; Minor: Statistics
-    Curriculum GPA: 3.8/4.0
-    Relevant Coursework: Introduction to Machine Learning, Computation and Optimization, Introduction to Computer Science
-    HARVEST FUND
-    Data Scientist, Operation Analysis Team
-    Integrate natural language processing model with internal database of 2.7 billion pieces of data, devised algorithms to translate natural language into SQL queries, enabled automated, dynamic data analysis while ensuring data security
-    Automated training/testing for natural language data analysis, resulting in 99% accuracy in semantic recognition
-    Deployed and scaled the solutions for 3 departments, enabling integrated AI analysis of growth, profit, bench-marking
-    UPHONEST CAPITAL
-    Data Scientist, LA Office
-    Developed a Python webdriver to gather financial data from 500+ cloud service companies, fed scraped data into machine learning algorithm after data integration and transformation, formed data-driven investment advise for 5 series-A startups
-    Modeled valuation forecasts of pre-investment companies to make quantitative strategy recommendation under COVID
-    DELIGHT FUNDING
-    Data Engineer, Marketing Division
-    Led 5 interns to design data warehouse through SQL, cleaned and stored over 180,000 pieces of consumer and sales records
-    Deployed Hadoop infrastructure to realize decentralized storage of text, empowered decision making via data mining
-    Leveraged high capacity database to conduct segmentation and precise advertising, increasing monthly retention by 10%
-    GUCCI
-    Data Analyst, Client Engagement Division
-    Leveraged ETL tools to process sales records of 100,000+ customers and developed algorithms for analyzing client metrics like customer life cycle; developed strategies for advertising campaigns accordingly, and contributed to 5% revenue growth
-    Automated Python and Tableau to extract data and generate 200+ tailored, highly visualized dashboards to retail stores
-    PLUG AND PLAY
-    Business Analyst, Institute of Innovation Ecosystem
-    Developed an innovative application to automate data collection and cleansing of financial information from 600+ global unicorns, analyzed company’s growth trends and development strategies across industries and countries to gain insights
-    Visualized and compiled research findings into a 20 pages report, published at the conference with 500+ stakeholders
-    SPATIO-TEMPORAL FORECASTING
-    Relevant Skills: Machine Learning, Statistical Modeling
-    Researcher, CMU Heinz College
-    Built forecasting model of 311 calls in Pittsburgh city based on 0.7 million historical data sets, constructed machine learning model trained by spatio and temporal information to yield accurate, real-time prediction on city service demand
-    Identified the disparity between 311 call counts and actual service demand across census tracts, formulated this under-representation as an N-P problem. Applied C-L Estimator in R to reveal the level of under-representation accurately
-    NON-PARAMETRIC ECONOMETRICS
-    Relevant Skills: Model Simulation, Data Estimation
-    Researcher, UCLA Economics Department
-    Constructed MATLAB to simulate multidimensional data and apply non-parametric regression, generating point forecasts by an unclosed form of modelling, solving for unobservable variables within 95% confidence interval
-    Extended the predictive models from 2-dimensional datasets to infinite dimensions and validated performance
-    SKILL AND INTEREST
-    Technical: Machine Learning, Classification, Unsupervised Learning, NLP, Data Mining, Data warehousing, Visualization
-    Programming Languages: Python, SQL, Java, R, C++, MATLAB, SPSS, SAS, Snowflake, AWS, Azure
-    Tools: Pandas, Numpy, Scikit-learn, PyTorch, Tensorflow, Hadoop, Matplotlib, Tableau, Spark, OpenAI
-    Open Source Contribution: Interactive Tarot Fortune Teller with OpenAI API (github.com/DavidHe0802/PyTarotAI)
-    Interest: Amateur Novelist, Cyber Tarot Reader, Certified Psych Counselor, Shangri-La chef assistant, Delivery Cyclist
-    '''
-
-    username = "highaherunyu@gmail.com"
-    password = "********"
-    search_string = "Carnegie Mellon University"
-
-    networking_message(search_string, 5, username, password, user_resume)
 
