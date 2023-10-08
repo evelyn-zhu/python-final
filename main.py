@@ -7,15 +7,15 @@ from docx import Document
 from skills import classification, get_skill, give_list
 from LinkedIn_Networking_Message import networking_message
 from linkedin import linkedinEasyApply
-from 
+from graph_jobs import prepare_plot
 
 def display_menu():
     menu_width = 50
     print("\n" + "█" * menu_width)
     print(" " * ((menu_width - len("Job Analytics Engine")) // 2) + "Job Analytics Engine")
     print("█" * menu_width)
-    print("\n{:<5} {:<42}".format("1.", "Advanced Job Analytis"))
-    print("{:<5} {:<42}".format("2.", "Advanced Job Analytis"))
+    print("\n{:<5} {:<42}".format("1.", "Macro Labor Market Forecast"))
+    print("{:<5} {:<42}".format("2.", "Career Insights Analytics By Employer's Sector"))
     print("{:<5} {:<42}".format("3.", "NLP Powered Job Description Similarity Check"))
     print("{:<5} {:<42}".format("4.", "Extract Skills from Job Title Clusters"))
     print("{:<5} {:<42}".format("5.", "Auto-Generate Cover Letter from Job Data"))
@@ -126,6 +126,7 @@ def main():
             predict_job_openings(df, best_order, n)
 
         elif choice == "2":
+            prepare_plot(df_cleaned)
 
         else:
             print("Invalid choice. Please select a valid option.")
