@@ -7,18 +7,22 @@ from docx import Document
 from skills import classification, get_skill, give_list
 from LinkedIn_Networking_Message import networking_message
 from linkedin import linkedinEasyApply
+from 
 
 def display_menu():
     menu_width = 50
     print("\n" + "█" * menu_width)
     print(" " * ((menu_width - len("Job Analytics Engine")) // 2) + "Job Analytics Engine")
     print("█" * menu_width)
-    print("\n{:<5} {:<42}".format("1.", "NLP Powered Job Description Similarity Check"))
-    print("{:<5} {:<42}".format("2.", "Extract Skills from Job Title Clusters"))
-    print("{:<5} {:<42}".format("3.", "Auto-Generate Cover Letter from Job Data"))
-    print("{:<5} {:<42}".format("4.", "AI-Driven LinkedIn Networking Message"))
-    print("{:<5} {:<42}".format("5.", "Auto Apply"))
-    print("{:<5} {:<42}".format("6.", "Exit Application"))
+    print("\n{:<5} {:<42}".format("1.", "Advanced Job Analytis"))
+    print("{:<5} {:<42}".format("2.", "Advanced Job Analytis"))
+    print("{:<5} {:<42}".format("3.", "NLP Powered Job Description Similarity Check"))
+    print("{:<5} {:<42}".format("4.", "Extract Skills from Job Title Clusters"))
+    print("{:<5} {:<42}".format("5.", "Auto-Generate Cover Letter from Job Data"))
+    print("{:<5} {:<42}".format("6.", "AI-Driven LinkedIn Networking Message"))
+    print("{:<5} {:<42}".format("7.", "Auto Apply"))
+    print("{:<5} {:<42}".format("8.", "Exit Application"))
+    
     print("\n" + "█" * menu_width)
 
 def display_welcome():
@@ -66,7 +70,7 @@ def main():
         display_menu()
         choice = input("Enter your choice (1-6): ")
 
-        if choice == "1":
+        if choice == "3":
             processed_resume = preprocess_text(resume_text)
             similarity_results = compute_similarity_and_skills(job_data_df, processed_resume)
 
@@ -75,14 +79,14 @@ def main():
                            ', '.join(res["Missing Skills"])) for res in similarity_results]
             print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
-        elif choice == "2":
+        elif choice == "4":
             job_title = input("Please enter the job title you want to apply for: ")
             df_label, cluster_id = classification(df_cleaned, job_title)
             annotation, job_num = get_skill(df_label, cluster_id)
             result_list = give_list(annotation, job_num)
             print(result_list)
 
-        elif choice == "3":
+        elif choice == "5":
 
             # Directly display jobs with row numbers without computing similarity
             display_jobs_with_numbers(job_data_df)
@@ -99,17 +103,29 @@ def main():
             except ValueError:
                 print("Please enter a valid integer row number.")
 
-        elif choice == "4":
+        elif choice == "6":
             search_string = input("Please enter the company/position/features of people you want to reach out:")
             number_of_connection = input("Please enter the number of people you want to message:")
             networking_message(search_string, int(number_of_connection), linkedin_account, linkedin_password, resume_text)
 
-        elif choice == "5":
+        elif choice == "7":
             linkedinEasyApply()
         
-        elif choice == "6":
+        elif choice == "8":
             print("Thanks for using us! See you next time.")
             break
+
+        elif choice == "1":
+            df = load_data("Book1 2.xlsx")
+            visualize_moving_average(df)
+            train_size = int(len(df) * 0.8)
+            train, test = df['value'][:train_size], df['value'][train_size:]
+            best_order = optimize_and_visualize_arima(train, test)
+            detect_anomalies(df['value'])
+            n = int(input("Enter the number of months for future predictions (default is 12): ") or 12)
+            predict_job_openings(df, best_order, n)
+
+        elif choice == "2":
 
         else:
             print("Invalid choice. Please select a valid option.")
