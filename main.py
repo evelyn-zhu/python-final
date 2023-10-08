@@ -6,6 +6,7 @@ from tabulate import tabulate
 from docx import Document
 from skills import classification, get_skill, give_list
 from LinkedIn_Networking_Message import networking_message
+from linkedin import linkedinEasyApply
 
 def display_menu():
     menu_width = 50
@@ -104,7 +105,7 @@ def main():
             networking_message(search_string, int(number_of_connection), linkedin_account, linkedin_password, resume_text)
 
         elif choice == "5":
-            print("we are still implementing this function")
+            linkedinEasyApply()
         
         elif choice == "6":
             print("Thanks for using us! See you next time.")
