@@ -8,6 +8,7 @@ from skills import classification, get_skill, give_list
 from LinkedIn_Networking_Message import networking_message
 from linkedin import linkedinEasyApply
 from graph_jobs import prepare_plot
+from job_openings import *
 
 def display_menu():
     menu_width = 50
