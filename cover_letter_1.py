@@ -4,10 +4,20 @@ from webscraper import get_job_data
 
 
 def generate_cover_letter(df, row_number, resume_text):
+
+    print("This may take 5 minutes, please wait...")
     # Load the data
     if row_number not in df.index:
         print(f"Row number {row_number} not found!")
         return
+
+    index = row_number
+    for i in range(len(df)):
+        if df.loc[i, "Job Description"] != "INVALID LINK":
+            index = index - 1
+        if index == 0:
+            row_number = i + 1
+            break
 
     # Extract job details
     position_name = df.loc[row_number, "Position Name"]
@@ -46,9 +56,11 @@ def generate_cover_letter(df, row_number, resume_text):
 
 def display_jobs_with_numbers(job_data_df):
     print("\nList of Jobs:")
+    i = 0
     for index, row in job_data_df.iterrows():
         if row["Job Description"] != "INVALID LINK":
-            print(f"Row {index}: {row['Position Name']} at {row['Company']}")
+            print(f"Row {i}: {row['Position Name']} at {row['Company']}")
+            i = i + 1
 
 def sanitize_filename(filename):
     """Sanitize the filename to remove characters that might cause issues."""
