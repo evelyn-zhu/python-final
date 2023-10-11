@@ -84,26 +84,31 @@ def webscrape_linkedin(job_name, username, password):
 
 
     # Fetch and parse the LinkedIn URL
-    each_job_elements = wd.find_elements(By.CLASS_NAME,class_each_job_card)
-    all_jobs_num = wd.find_element(By.CLASS_NAME,'results-context-header__job-count')
-    new_jobs_num = wd.find_element(By.CLASS_NAME,'results-context-header__new-jobs')
-
-
+    while True:
+        try:
+            each_job_elements = wd.find_elements(By.CLASS_NAME,class_each_job_card)
+            all_jobs_num = wd.find_element(By.CLASS_NAME,'results-context-header__job-count')
+            new_jobs_num = wd.find_element(By.CLASS_NAME,'results-context-header__new-jobs')
+            break
+        except:
+            wd.back()
+            waiting(2)
+    
     # get ALL jobs
     while True:
         wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        waiting(2)
+        waiting(1)
         wd.execute_script("window.scrollBy(0, -200);")
-        waiting(2)
+        waiting(1)
         wd.execute_script("window.scrollBy(0, 500);")
-        waiting(3)
+        waiting(1)
         
         new_items = wd.find_elements(By.CLASS_NAME, class_each_job_card)
-        waiting(2)
+        waiting(1)
         try:
             load_more = wd.find_element(By.CLASS_NAME, class_more_job_button)
             load_more.click()
-            waiting(2)
+            waiting(1)
         except:
             pass
         if len(new_items) == len(each_job_elements):
@@ -139,13 +144,19 @@ def webscrape_linkedin(job_name, username, password):
     index = 0
     for url in job_link_list:
         wd.get(url)
-        waiting(1.5)
+        waiting(1)
         # get job description
         try:
             jd = wd.find_element(By.CLASS_NAME,class_job_description)
             result.at[index, result.columns[4]] = jd.text
         except:
-            result.at[index, result.columns[4]] = "INVALID LINK"
+            try:
+                wd.refresh()
+                waiting(1)
+                jd = wd.find_element(By.CLASS_NAME,class_job_description)
+                result.at[index, result.columns[4]] = jd.text
+            except:
+                result.at[index, result.columns[4]] = "INVALID LINK"
 
         # get number of applicants
         try:
@@ -210,3 +221,6 @@ def get_job_data(job_name, linkedin_account, linkedin_password):
         return webscrape_linkedin(job_name, linkedin_account, linkedin_password)
 
 
+
+if __name__ == "__main__":
+    webscrape_linkedin("data science", "highaherunyu@gmail.com", "91164142Abcd")
