@@ -1,67 +1,7 @@
 import pandas as pd
-import gensim
-from gensim.parsing.preprocessing import remove_stopwords, STOPWORDS
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import KMeans
 import spacy
 from sklearn.cluster import MiniBatchKMeans
 from spacy.matcher import PhraseMatcher
-
-# # Load skillNer modules (assuming they are available)
-# from skillNer.general_params import SKILL_DB
-# from skillNer.skill_extractor_class import SkillExtractor
-#
-# def classification(df_cleaned, job):
-#     job_title = job
-#
-#     # Create a TF-IDF vectorizer
-#     tfidf_vectorizer = TfidfVectorizer(max_features=5000)
-#     tfidf_matrix = tfidf_vectorizer.fit_transform(df_cleaned["Job Description"])
-#
-#     # K-Means Clustering
-#     n_clusters = 5  # You can choose the number of clusters
-#     kmeans = MiniBatchKMeans(n_clusters=n_clusters)
-#     kmeans.fit(tfidf_matrix)
-#
-#     cluster_labels = kmeans.labels_
-#     result_df = pd.DataFrame({'Position Name': df_cleaned["Position Name"], 'Cluster Label': cluster_labels})
-#     df_label = pd.concat([result_df.set_index("Position Name"), df_cleaned.set_index("Position Name")], axis=1).reset_index()
-#
-#     new_job_title_vector = tfidf_vectorizer.transform([job_title])
-#     predicted_cluster = kmeans.predict(new_job_title_vector)
-#     return df_label, predicted_cluster[0]
-#
-# def get_skill(df_label, cluster_id):
-#     nlp = spacy.load("en_core_web_lg")
-#     skill_extractor = SkillExtractor(nlp, SKILL_DB, PhraseMatcher)
-#
-#     job_description = ""
-#     job_num = 0
-#     for i in df_label[df_label["Cluster Label"] == cluster_id]["Job Description"]:
-#         job_description += i
-#         job_num += 1
-#     print("Please wait...")
-#     annotations = skill_extractor.annotate(job_description)
-#
-#     return annotations, job_num
-#
-#
-# def give_list(annotations, job_num):
-#     skill_list = {}
-#     for t in annotations['results']:
-#         for skill in annotations['results'][t]:
-#             if skill['doc_node_value'] not in skill_list:
-#                 skill_list[skill['doc_node_value']] = 1
-#             else:
-#                 skill_list[skill['doc_node_value']] += 1
-#
-#     # Sort skills by frequency
-#     sorted_skills = sorted(skill_list.items(), key=lambda x: x[1], reverse=True)
-#
-#     threshold = 0.75 * job_num
-#     l = [key for key, value in sorted_skills if value >= threshold]
-#     return l
-#
 import gensim
 from gensim.parsing.preprocessing import remove_stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -84,6 +24,7 @@ def clean_data(df):
 
 
 def classification(df_cleaned, job):
+    df_cleaned = clean_data(df_cleaned).head(20)
     job_title = job
 
     tfidf_vectorizer = TfidfVectorizer()
