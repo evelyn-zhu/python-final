@@ -6,7 +6,6 @@ from tabulate import tabulate
 from docx import Document
 from skills import classification, get_skill, give_list
 from LinkedIn_Networking_Message import networking_message
-from linkedin import linkedinEasyApply
 from graph_jobs import prepare_plot
 from job_openings import load_data, visualize_moving_average, optimize_and_visualize_arima, detect_anomalies, predict_job_openings
 
@@ -69,9 +68,10 @@ def main():
     # Menu-driven loop
     while True:
         display_menu()
-        choice = input("Enter your choice (1-6): ")
+        choice = input("Enter your choice (1-8): ")
 
         if choice == "3":
+            print("This may take 5 minutes, please wait...")
             processed_resume = preprocess_text(resume_text)
             similarity_results = compute_similarity_and_skills(job_data_df, processed_resume)
 
@@ -98,6 +98,7 @@ def main():
                 if mode == "1":
                     generate_cover_letter(job_data_df, row_number, resume_text)
                 elif mode == "2":
+                    print("This may take  minutes, please wait...")
                     write_coverletter(job_data_df, row_number, resume_text)
                 else:
                     print("invalid choice, please try again.")
@@ -110,6 +111,7 @@ def main():
             networking_message(search_string, int(number_of_connection), linkedin_account, linkedin_password, resume_text)
 
         elif choice == "7":
+            from linkedin import linkedinEasyApply
             linkedinEasyApply()
         
         elif choice == "8":
@@ -117,11 +119,11 @@ def main():
             break
 
         elif choice == "1":
-            df = load_data("Book1 2.xlsx")
+            df = load_data("job_cleaning.xlsx")
             visualize_moving_average(df)
             train_size = int(len(df) * 0.8)
             train, test = df['value'][:train_size], df['value'][train_size:]
-            best_order = optimize_and_visualize_arima(train, test)
+            best_order = optimize_and_visualize_arima(train, test, df)
             detect_anomalies(df['value'])
             n = int(input("Enter the number of months for future predictions (default is 12): ") or 12)
             predict_job_openings(df, best_order, n)
