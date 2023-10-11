@@ -1,12 +1,17 @@
 import time,math,random,os
-import utils,constants,config
+import constants
+import utils
+from utils import prRed,prYellow,prGreen
+import config
+
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from utils import prRed,prYellow,prGreen
 
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
+
+
 
 class Linkedin:
     def __init__(self):
@@ -240,8 +245,8 @@ class Linkedin:
             utils.writeResults(lineToWrite)
         except Exception as e:
             prRed("❌ Error in DisplayWriteResults: " +str(e))
-def linkedinEasyApply():
-    
+
+def linkedinEasyApply():    
     if config.first == "0" :
         return
     start = time.time()
