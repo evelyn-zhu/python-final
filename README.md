@@ -4,6 +4,23 @@ Harnessing the advanced capabilities of modern Natural Language Processing (NLP)
 
 ## Core Functionalities
 
+### webscraper.py
+**High-Resolution Web Scraper**:
+- **Data Extraction**: Dives deep into LinkedIn's data-rich environments, capturing nuanced job details, company profiles, and industry trends based on specified criteria.
+- **Data Storage**: Organizes the scraped data into structured datasets, making it ready for further processing and analysis.
+- **Analysis**: Profiles job markets, highlighting emerging trends, desired skills, and potential growth areas.
+
+### job_openings.py
+**Time Series Analysis & Prediction Functions**:
+- **Data Extraction**: Reads an Excel file with data using the provided filename. Converts the 'Time' column to a datetime format using the '%YM%m' structure.
+- **Data Processing**: Calculates a 12-month moving average of the 'value' column in the dataframe. Utilizes a rolling mean and standard deviation approach to detect anomalies in a time series. Calculates and displays the difference between consecutive forecasted values to identify growth or decline.
+- **Analysis**: Identifies the optimal ARIMA model parameters (p, d, q) by iterating through potential combinations and comparing the Akaike Information Criterion (AIC). Uses the previously determined best ARIMA model parameters to forecast future job openings.
+
+### graph_jobs.py
+**Professional Analytics for Job Industries**:
+- **Data Preparation**: Drops missing data entries and cleans the 'Industry' field by truncating the string. Aggregates and summarizes applicant and job opening data by industry.
+- **Data Analysis**: 1, Showcases industries with a significant number of applicants. 2, Highlights industries with the most job openings. 3, Computes the ratio of applicants to job openings and identifies industries that offer the best chances of employment with minimal competition.
+
 ### similarity.py
 **Deep Skill Matching Algorithm**:
 - **Data Extraction**: Scours LinkedIn job listings, extracting required skills and qualifications with impeccable accuracy.
@@ -18,22 +35,22 @@ Harnessing the advanced capabilities of modern Natural Language Processing (NLP)
 - **Analysis**: Compares user's skill repertoire against industry benchmarks, identifying areas of strength and potential improvement.
 
 ### cover_letter_1.py & cover_letter_2.py
-**Adaptive Cover Letter Generators**:
+**Automated Job Application Tool**:
 - **Data Extraction**: Gathers specific job details like role, company values, and required qualifications.
 - **Content Generation**: Utilizing GPT-4's unparalleled NLP capabilities, these modules craft bespoke cover letters that not only resonate with the job description but also emphasize the user's unique value proposition.
 - **Outcome**: Personalized cover letters that enhance user's application visibility among a sea of generic applications.
-
-### webscraper.py
-**High-Resolution Web Scraper**:
-- **Data Extraction**: Dives deep into LinkedIn's data-rich environments, capturing nuanced job details, company profiles, and industry trends based on specified criteria.
-- **Data Storage**: Organizes the scraped data into structured datasets, making it ready for further processing and analysis.
-- **Analysis**: Profiles job markets, highlighting emerging trends, desired skills, and potential growth areas.
 
 ### linkedin_messaging.py
 **Strategic Networking Tool**:
 - **Data Extraction**: Retrieves connection profiles and past interaction history.
 - **Content Generation**: With GPT-4 at its core, this tool drafts context-aware, personalized messages tailored to each connection, ensuring meaningful interactions.
 - **Outcome**: Efficiently networks on LinkedIn, nurturing connections and fostering potential job leads.
+
+### linkedin_easyapply.py
+**Strategic Networking Tool**:
+- **Data Extraction**: Gathers up-to-date URLs of job listings tailored to the user's preferences, ensuring the most relevant opportunities are considered.
+- **Content Generation**: Populate LinkedIn's "Easy Apply" forms, ensuring accurate and context-aware information submission.
+- **Outcome**: Streamlines the process of job hunting by automating applications to several listings, saving time and effort.
 
 ### main.py
 **Unified Interface & Integration Core**:
@@ -72,10 +89,10 @@ Harnessing the advanced capabilities of modern Natural Language Processing (NLP)
 - Ensure compatibility between ChromeDriver and your Chrome browser version.
 - We recommend initial tests in a controlled setting before extensive deployment.
 
-## Important Notes
+## Liscense
 MIT
 
-## Important Notes
+## Clarification
 This project is intended for educational and research purposes. The developers disclaim responsibility for any misuse or potential violations of terms of service.
 
 ## Contributors:
