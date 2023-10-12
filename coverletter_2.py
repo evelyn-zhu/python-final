@@ -1,7 +1,7 @@
 import requests
 import json
 import random
-import pandas as pd
+import numpy as np
 import xlrd
 import os
 import openai
@@ -12,7 +12,6 @@ from webscraper import get_job_data
 openai.api_key = "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"
 
 def call_openai_api(instruction, prompt):
-    # model = "gpt-3.5-turbo"
     model = "gpt-4"
     messages = [
         {"role": "system", "content": instruction},
@@ -26,20 +25,22 @@ def call_openai_api(instruction, prompt):
 
     return response
 
-
 def write_coverletter(df, row_number, resume):
+    # Convert DataFrame to numpy structured array
+    job_data = df.to_records(index=False)
 
-    index = row_number
-    for i in range(len(df)):
-        if df.loc[i, "Job Description"] != "INVALID LINK":
-            index = index - 1
-        if index == 0:
-            row_number = i
-            break
-
-    company_name = df.loc[row_number, "Company"]
-    jd = df.loc[row_number, "Job Description"]
+    # Using numpy where condition to get valid links
+    valid_jobs = np.where(job_data['Job Description'] != b"INVALID LINK")[0]
     
+    if row_number > len(valid_jobs):
+        print("Invalid row number!")
+        return
+    
+    job_index = valid_jobs[row_number]
+    
+    company_name = job_data['Company'][job_index].decode('utf-8')  # Decode bytes to string
+    jd = job_data['Job Description'][job_index].decode('utf-8')
+
     print(f"writing your cover letter for {company_name}!")
     
     instruction = f'''
@@ -56,7 +57,7 @@ def write_coverletter(df, row_number, resume):
     
     {resume}
     '''
-
+    
     doc = Document()
     response = call_openai_api(instruction, "Below is the job description:" + jd)
     doc.add_paragraph(response['choices'][0]['message']['content'])
@@ -70,6 +71,9 @@ def write_coverletter(df, row_number, resume):
     cost = response['usage']['prompt_tokens'] * 0.03 * 0.001 + response['usage']['prompt_tokens'] * 0.03 * 0.001
     print("total cost: " + str(cost))
 
-#job_description = input("Please enter the job description:")
-#print(job_description)
-#write_coverletter(job_description)
+# Sample code to simulate using the function (You can modify or remove)
+# NOTE: Ensure 'get_job_data' returns a pandas DataFrame.
+# job_data_df = get_job_data()
+# job_description = input("Please enter the job description:")
+# write_coverletter(job_data_df, 0, job_description)
+
