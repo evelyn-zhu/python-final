@@ -96,10 +96,10 @@ def main():
                 row_number = int(input("Please enter the row number of the job you want to generate a cover letter for: "))
                 mode = input("To use existing template, press 1; to use AI generated cover letter, press 2:")
                 if mode == "1":
-                    generate_cover_letter(job_data_df, row_number, resume_text)
+                    generate_cover_letter(job_data_df, row_number + 1, resume_text)
                 elif mode == "2":
                     print("This may take  minutes, please wait...")
-                    write_coverletter(job_data_df, row_number, resume_text)
+                    write_coverletter(job_data_df, row_number + 1, resume_text)
                 else:
                     print("invalid choice, please try again.")
             except ValueError:
