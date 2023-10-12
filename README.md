@@ -61,7 +61,7 @@ Harnessing the advanced capabilities of modern Natural Language Processing (NLP)
 
 1. Python 3.x
 2. Google Chrome Browser and the corresponding [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/).
-3. Essential Python libraries: `selenium`, `pandas`, `openai`, `xlrd`, `requests`, `datetime`.
+3. Essential Python libraries: `selenium`, `pandas`, `openai`, `xlrd`, `requests`, `datetime`, 'time', 'json', 'random', 'xlrd', 'os', 'doc', 're', 'sys', 'docx', 'docx2pdf', 'matploylib', 'warnings', 'math', 'webdriver_manager', 'packaging', 'pymogo', 'transformers', 'torch', 'skillNer', 'typing', 'gensim', 'sklearn', 'spacy', 'en_core_web_lg' (download from spacy).
 
 ## Installation
 
