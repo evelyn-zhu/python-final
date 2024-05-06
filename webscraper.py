@@ -223,4 +223,4 @@ def get_job_data(job_name, linkedin_account, linkedin_password):
 
 
 if __name__ == "__main__":
-    webscrape_linkedin("data science", "highaherunyu@gmail.com", "91164142Abcd")
+    webscrape_linkedin("data science", "highaherunyu@gmail.com", "password")
